@@ -9,6 +9,7 @@ import {
   defaultCommandMapping,
   CommandMapping,
   Outputs,
+  Emulator,
 } from 'javascript-terminal'
 
 import ReactWindow from 'reactjs-windows'
@@ -16,12 +17,16 @@ import 'reactjs-windows/dist/index.css'
 import { useState } from 'react'
 
 const Home: NextPage = () => {
+  const emulator = new Emulator()
+
   const customState = EmulatorState.create({
     fs: FileSystem.create({
-      '/home': {},
-      '/home/README': { content: 'This is a text file' },
-      '/home/nested/directory': {},
-      '/home/nested/directory/file': { content: 'End of nested directory!' },
+      '/Gonçalo_Rosa': {},
+      '/Gonçalo_Rosa/README': { content: 'This is a text file' },
+      '/Gonçalo_Rosa/nested/directory': {},
+      '/Gonçalo_Rosa/nested/directory/file': {
+        content: 'End of nested directory!',
+      },
     }),
 
     commandMapping: CommandMapping.create({
@@ -40,17 +45,16 @@ const Home: NextPage = () => {
         },
         optDef: {},
       },
-
-      // clr: {
-      //   function: (state, opts) => {
-      //     const input = opts.join(' ')
-
-      //     return {
-      //       output: (emulatorState = customState.setOutputs('')),
-      //     }
-      //   },
-      //   optDef: {},
-      // },
+      help: {
+        function: (state, opts) => {
+          const input = newEmulatorState.getCommandMapping()
+          console.log(input.map(a => console.log(a)))
+          return {
+            output: OutputFactory.getCommandMapping(),
+          }
+        },
+        optDef: {},
+      },
     }),
   })
   const defaultOutputs = customState.getOutputs()
@@ -64,11 +68,15 @@ const Home: NextPage = () => {
   const newHistory = History.recordCommand(defaultHistory, 'history')
   customState.setHistory(newHistory)
 
+  const commandStr = 'ls'
+  const plugins = []
+
+  const newEmulatorState = emulator.execute(emulatorState, commandStr, plugins)
+
   return (
     <div>
       <ReactTerminal
-        inputStr={'ls'}
-        emulatorState={emulatorState}
+        emulatorState={newEmulatorState}
         promptSymbol=">‍"
         theme={{
           background: '#141313',
