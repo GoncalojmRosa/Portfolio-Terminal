@@ -32,7 +32,7 @@ const Home: NextPage = () => {
     commandMapping: CommandMapping.create({
       ...defaultCommandMapping,
       print: {
-        function: (state, opts) => {
+        function: (state: any, opts: any) => {
           const input = opts.join(' ')
 
           return {
@@ -46,9 +46,9 @@ const Home: NextPage = () => {
         optDef: {},
       },
       help: {
-        function: (state, opts) => {
+        function: (state: any, opts: any) => {
           const input = newEmulatorState.getCommandMapping()
-          console.log(input.map(a => console.log(a)))
+          // console.log(input.map(a: => console.log(a)))
           return {
             output: OutputFactory.getCommandMapping(),
           }
@@ -69,7 +69,7 @@ const Home: NextPage = () => {
   customState.setHistory(newHistory)
 
   const commandStr = 'ls'
-  const plugins = []
+  const plugins: any = []
 
   const newEmulatorState = emulator.execute(emulatorState, commandStr, plugins)
 
