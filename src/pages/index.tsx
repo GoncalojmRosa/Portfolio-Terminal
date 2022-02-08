@@ -15,7 +15,7 @@ import {
 import ReactWindow from 'reactjs-windows'
 import 'reactjs-windows/dist/index.css'
 
-import Curriculum from '../documents/Certificado.pdf'
+// import Curriculum from '../documents/Certificado.pdf'
 
 import { pdfjs, Document, Page } from 'react-pdf'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
           return {
             output: OutputFactory.makeTextOutput(
               <ReactWindow title="Test Window">
-                <Document file={Curriculum} />
+                {/* <Document file={Curriculum} /> */}
               </ReactWindow>
             ),
           }
